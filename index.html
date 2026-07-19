@@ -9,14 +9,19 @@
     />
     <meta name="theme-color" content="#a91e12" />
     <link rel="icon" href="assets/logo-idehais.png" />
-    <title>IDEHAIS</title>
+    <title>IDEHAIS | Site em construção</title>
 
     <style>
       :root {
         color-scheme: light;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family:
+          system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: #171717;
-        background: #f7f7f7;
+        background: #efefed;
+        --red: #ae2014;
+        --dark: #181818;
+        --muted: #b8b8b8;
+        --paper: #fefefe;
       }
 
       * {
@@ -25,84 +30,246 @@
 
       body {
         min-height: 100vh;
+        min-height: 100svh;
         margin: 0;
         display: grid;
         place-items: center;
-        padding: 24px;
+        padding: clamp(16px, 4vw, 48px);
+        background: #efefed;
       }
 
       main {
-        width: min(100%, 680px);
-        padding: clamp(28px, 6vw, 56px);
-        text-align: center;
-        background: #ffffff;
-        border-top: 5px solid #a91e12;
-        border-radius: 12px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        width: min(100%, 1180px);
+        min-height: min(720px, calc(100svh - 96px));
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        grid-template-areas: "message identity";
+        overflow: hidden;
+        background: var(--paper);
+        border: 1px solid rgba(23, 23, 23, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 24px 80px rgba(24, 24, 24, 0.12);
       }
 
-      img {
-        display: block;
-        width: min(100%, 420px);
-        height: auto;
-        margin: -80px auto -65px;
+      .message {
+        grid-area: message;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(40px, 6vw, 76px);
+        color: #ffffff;
+        background: var(--dark);
       }
 
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(1.5rem, 5vw, 2.25rem);
-        line-height: 1.15;
+      .message::before {
+        content: "";
+        width: 52px;
+        height: 5px;
+        position: absolute;
+        top: clamp(40px, 6vw, 76px);
+        left: clamp(40px, 6vw, 76px);
+        background: var(--red);
       }
 
-      p {
-        max-width: 500px;
-        margin: 0 auto;
-        color: #5b5b5b;
-        font-size: 1rem;
-        line-height: 1.6;
+      .content {
+        margin-block: auto;
+        padding-block: 64px;
       }
 
       .status {
-        display: inline-block;
-        margin-top: 28px;
-        padding: 10px 16px;
-        color: #8f180e;
-        background: #fff0ee;
-        border-radius: 999px;
-        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 24px;
+        color: #e5e5e5;
+        font-size: 0.75rem;
         font-weight: 700;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
       }
 
-      @media (max-width: 480px) {
-        main {
-          padding-inline: 20px;
+      .status::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        flex: 0 0 auto;
+        background: var(--red);
+        border-radius: 50%;
+      }
+
+      h1 {
+        max-width: 13ch;
+        margin: 0;
+        font-size: clamp(2.25rem, 4.8vw, 4.5rem);
+        font-weight: 750;
+        letter-spacing: -0.045em;
+        line-height: 1.02;
+        text-wrap: balance;
+      }
+
+      .description {
+        max-width: 36rem;
+        margin: 28px 0 0;
+        color: var(--muted);
+        font-size: clamp(1rem, 1.4vw, 1.125rem);
+        line-height: 1.7;
+      }
+
+      .note {
+        margin: 0;
+        color: #7e7e7e;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .identity {
+        grid-area: identity;
+        position: relative;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: var(--paper);
+      }
+
+      .identity::before,
+      .identity::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .identity::before {
+        width: 120px;
+        height: 6px;
+        top: 0;
+        right: clamp(28px, 5vw, 64px);
+        background: var(--red);
+      }
+
+      .identity::after {
+        width: 180px;
+        height: 180px;
+        right: -110px;
+        bottom: -110px;
+        border: 1px solid rgba(174, 32, 20, 0.18);
+        border-radius: 50%;
+      }
+
+      .logo-window {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+      }
+
+      .logo {
+        width: 138%;
+        max-width: none;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        transform: translate(-50%, -50%);
+      }
+
+      @media (max-width: 800px) {
+        body {
+          padding: 0;
+          background: var(--paper);
         }
 
-        img {
-          margin-block: -55px -42px;
+        main {
+          min-height: 100vh;
+          min-height: 100svh;
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "identity"
+            "message";
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+
+        .identity {
+          min-height: 280px;
+        }
+
+        .logo-window {
+          max-width: 560px;
+          aspect-ratio: 1.35 / 1;
+        }
+
+        .logo {
+          width: 130%;
+        }
+
+        .message {
+          min-height: 52svh;
+          padding: clamp(32px, 9vw, 56px);
+        }
+
+        .message::before {
+          top: clamp(32px, 9vw, 56px);
+          left: clamp(32px, 9vw, 56px);
+        }
+
+        .content {
+          padding-block: 64px 48px;
+        }
+
+        h1 {
+          max-width: 15ch;
+          font-size: clamp(2.15rem, 10vw, 3.75rem);
+        }
+      }
+
+      @media (max-width: 420px) {
+        .identity {
+          min-height: 230px;
+        }
+
+        .logo-window {
+          aspect-ratio: 1.45 / 1;
+        }
+
+        .message {
+          min-height: auto;
         }
       }
     </style>
   </head>
 
   <body>
-    <main>
-      <img
-        src="assets/logo-idehais.png"
-        width="1254"
-        height="1254"
-        alt="IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social"
-      />
+    <main aria-labelledby="page-title">
+      <section class="identity" aria-label="Identidade do IDEHAIS">
+        <div class="logo-window">
+          <img
+            class="logo"
+            src="assets/logo-idehais.png"
+            width="1254"
+            height="1254"
+            alt="IDEHAIS"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </section>
 
-      <h1>Nosso site estará disponível em breve.</h1>
-      <p>
-        Estamos preparando o novo espaço digital do Instituto de Desenvolvimento
-        Habitacional de Interesse Social.
-      </p>
+      <section class="message">
+        <div class="content">
+          <p class="status">Site em construção</p>
+          <h1 id="page-title">Estamos construindo um novo espaço para o IDEHAIS.</h1>
+          <p class="description">
+            Em breve, este será o canal digital do Instituto de Desenvolvimento
+            Habitacional de Interesse Social.
+          </p>
+        </div>
 
-      <span class="status">Site em construção</span>
+        <p class="note">Uma nova presença digital está a caminho.</p>
+      </section>
     </main>
   </body>
 </html>
