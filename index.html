@@ -5,271 +5,1373 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social."
+      content="IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social. Moradia digna, cidadania e desenvolvimento social."
     />
-    <meta name="theme-color" content="#a91e12" />
-    <link rel="icon" href="assets/logo-idehais.png" />
-    <title>IDEHAIS | Site em construção</title>
+    <meta name="theme-color" content="#141210" />
+    <link rel="icon" href="assets/logo-mark.png" />
+    <title>IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social</title>
 
     <style>
       :root {
-        color-scheme: light;
-        font-family:
-          system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: #171717;
-        background: #efefed;
+        --ink: #1b1917;
+        --ink-soft: #57514a;
+        --ink-mute: #857b70;
         --red: #ae2014;
-        --dark: #181818;
-        --muted: #b8b8b8;
-        --paper: #fefefe;
+        --red-deep: #8a1810;
+        --bg: #f4f0e8;
+        --bg-2: #efe9df;
+        --paper: #fbf9f5;
+        --dark: #16130f;
+        --dark-2: #1f1b16;
+        --line: rgba(27, 25, 23, 0.14);
+        --line-soft: rgba(27, 25, 23, 0.08);
+        --shell: 1200px;
+        --gutter: clamp(22px, 5vw, 56px);
+        --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+          Georgia, "Times New Roman", serif;
+        --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        --ease: cubic-bezier(0.22, 0.75, 0.24, 1);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 76px;
+        -webkit-text-size-adjust: 100%;
+      }
+
       body {
-        min-height: 100vh;
-        min-height: 100svh;
         margin: 0;
-        display: grid;
-        place-items: center;
-        padding: clamp(16px, 4vw, 48px);
-        background: #efefed;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
 
-      main {
-        width: min(100%, 1180px);
-        min-height: min(720px, calc(100svh - 96px));
-        display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-        grid-template-areas: "message identity";
-        overflow: hidden;
-        background: var(--paper);
-        border: 1px solid rgba(23, 23, 23, 0.08);
-        border-radius: 24px;
-        box-shadow: 0 24px 80px rgba(24, 24, 24, 0.12);
+      a {
+        color: inherit;
+        text-decoration: none;
       }
 
-      .message {
-        grid-area: message;
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--serif);
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        line-height: 1.08;
+        text-wrap: balance;
+        margin: 0;
+      }
+
+      .shell {
+        width: 100%;
+        max-width: var(--shell);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      /* ---- Global grain texture ---- */
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        opacity: 0.05;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      /* ---- Reveal system ---- */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+        transition-delay: var(--d, 0s);
+      }
+
+      [data-reveal].in {
+        opacity: 1;
+        transform: none;
+      }
+
+      .eyebrow {
+        font-family: var(--sans);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--red);
+        margin: 0;
+      }
+
+      .lead {
+        color: var(--ink-soft);
+        font-size: 1.14rem;
+      }
+
+      /* ---- Buttons ---- */
+      .btn {
         position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: clamp(40px, 6vw, 76px);
-        color: #ffffff;
-        background: var(--dark);
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 52px;
+        padding: 0 28px;
+        border-radius: 2px;
+        font-family: var(--sans);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        border: 1px solid transparent;
+        overflow: hidden;
+        transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
+        cursor: pointer;
       }
 
-      .message::before {
-        content: "";
-        width: 52px;
-        height: 5px;
-        position: absolute;
-        top: clamp(40px, 6vw, 76px);
-        left: clamp(40px, 6vw, 76px);
+      .btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn svg {
+        position: relative;
+        z-index: 1;
+        width: 17px;
+        height: 17px;
+        transition: transform 0.35s var(--ease);
+      }
+
+      .btn:hover svg {
+        transform: translateX(4px);
+      }
+
+      .btn-primary {
         background: var(--red);
+        color: #fff;
       }
 
-      .content {
-        margin-block: auto;
-        padding-block: 64px;
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--dark);
+        transform: translateY(101%);
+        transition: transform 0.4s var(--ease);
       }
 
-      .status {
+      .btn-primary:hover::before {
+        transform: translateY(0);
+      }
+
+      .btn-line {
+        border-color: var(--line);
+        color: var(--ink);
+      }
+
+      .btn-line::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--ink);
+        transform: translateY(101%);
+        transition: transform 0.4s var(--ease);
+        z-index: 0;
+      }
+
+      .btn-line:hover {
+        color: var(--bg);
+        border-color: var(--ink);
+      }
+
+      .btn-line:hover::before {
+        transform: translateY(0);
+      }
+
+      /* ---- Header ---- */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
+          backdrop-filter 0.4s var(--ease);
+        border-bottom: 1px solid transparent;
+      }
+
+      header.scrolled {
+        background: rgba(244, 240, 232, 0.82);
+        backdrop-filter: saturate(180%) blur(14px);
+        border-bottom-color: var(--line-soft);
+      }
+
+      .nav {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin: 0 0 24px;
-        color: #e5e5e5;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
+        justify-content: space-between;
+        height: 72px;
       }
 
-      .status::before {
+      .brand {
+        display: flex;
+        align-items: center;
+      }
+
+      .brand-logo {
+        height: 44px;
+        width: auto;
+        display: block;
+      }
+
+      @media (max-width: 380px) {
+        .brand-logo {
+          height: 38px;
+        }
+      }
+
+      .nav-links {
+        display: none;
+        align-items: center;
+        gap: 38px;
+        font-size: 0.9rem;
+      }
+
+      .nav-links a.navitem {
+        position: relative;
+        color: var(--ink-soft);
+        padding: 4px 0;
+        transition: color 0.3s var(--ease);
+      }
+
+      .nav-links a.navitem::after {
         content: "";
-        width: 8px;
-        height: 8px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--red);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s var(--ease);
+      }
+
+      .nav-links a.navitem:hover {
+        color: var(--ink);
+      }
+
+      .nav-links a.navitem:hover::after {
+        transform: scaleX(1);
+      }
+
+      .nav-links .btn {
+        min-height: 44px;
+        padding: 0 22px;
+      }
+
+      .burger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin-right: -12px;
+        background: none;
+        border: none;
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .mobile-panel {
+        position: fixed;
+        inset: 72px 0 auto 0;
+        z-index: 39;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+        transform: translateY(-8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+      }
+
+      .mobile-panel.open {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+
+      .mobile-panel a {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 18px var(--gutter);
+        font-family: var(--serif);
+        font-size: 1.5rem;
+        color: var(--ink);
+        border-top: 1px solid var(--line-soft);
+      }
+
+      .mobile-panel a i {
+        font-style: normal;
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: var(--red);
+      }
+
+      /* ---- Hero ---- */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        padding-top: 108px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow: hidden;
+        background:
+          radial-gradient(120% 90% at 50% 120%, rgba(174, 32, 20, 0.05), transparent 60%),
+          linear-gradient(180deg, var(--bg), var(--bg-2));
+      }
+
+      .hero-grid {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(var(--line-soft) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+        background-size: clamp(48px, 7vw, 88px) clamp(48px, 7vw, 88px);
+        mask-image: radial-gradient(120% 80% at 50% 30%, #000 30%, transparent 78%);
+        opacity: 0.7;
+      }
+
+      .hero-meta {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: clamp(28px, 5vw, 44px);
+      }
+
+      .hero-meta {
+        align-items: flex-start;
+      }
+
+      .hero-name {
+        margin: 0;
+        max-width: 34ch;
+        font-family: var(--serif);
+        font-size: clamp(0.98rem, 1.5vw, 1.2rem);
+        line-height: 1.3;
+        color: var(--ink-soft);
+      }
+
+      .hero-meta .tick {
         flex: 0 0 auto;
+        padding-left: 16px;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+      }
+
+      .hero-body {
+        position: relative;
+        z-index: 2;
+        margin-top: auto;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.05rem, 8.4vw, 6.4rem);
+        letter-spacing: -0.025em;
+        max-width: 15ch;
+      }
+
+      .hero h1 .word {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: top;
+        padding: 0.06em 0.12em 0.2em;
+        margin: -0.06em -0.12em -0.2em;
+      }
+
+      .hero h1 .word > span {
+        display: inline-block;
+        transform: translateY(105%);
+        transition: transform 1s var(--ease);
+        transition-delay: calc(var(--i) * 0.08s + 0.15s);
+      }
+
+      body.ready .hero h1 .word > span {
+        transform: none;
+      }
+
+      .hero h1 em {
+        font-style: italic;
+        color: var(--red);
+      }
+
+      .hero-foot {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-top: clamp(28px, 4vw, 44px);
+      }
+
+      .hero-foot p {
+        max-width: 42ch;
+        margin: 0;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      /* Skyline */
+      .hero-skyline {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: clamp(84px, 15vw, 168px);
+        margin-top: clamp(36px, 6vw, 64px);
+        overflow: hidden;
+        pointer-events: none;
+        clip-path: inset(0 100% 0 0);
+        transition: clip-path 1.6s var(--ease) 0.5s;
+      }
+
+      body.ready .hero-skyline {
+        clip-path: inset(0 0 0 0);
+      }
+
+      .hero-skyline svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .hero-skyline .b {
+        fill: var(--ink);
+        opacity: 0.1;
+      }
+
+      .hero-skyline .r {
+        fill: var(--red);
+        opacity: 0.6;
+      }
+
+      /* ---- Marquee ---- */
+      .marquee {
+        border-block: 1px solid var(--line);
+        background: var(--dark);
+        color: var(--bg);
+        overflow: hidden;
+        padding: 20px 0;
+      }
+
+      .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee 34s linear infinite;
+      }
+
+      .marquee:hover .marquee-track {
+        animation-play-state: paused;
+      }
+
+      .marquee span {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--serif);
+        font-size: clamp(1.2rem, 3vw, 1.9rem);
+        letter-spacing: 0.01em;
+        padding: 0 clamp(20px, 4vw, 44px);
+        white-space: nowrap;
+      }
+
+      .marquee span::after {
+        content: "";
+        width: 7px;
+        height: 7px;
+        margin-left: clamp(40px, 8vw, 88px);
         background: var(--red);
         border-radius: 50%;
       }
 
-      h1 {
-        max-width: 13ch;
-        margin: 0;
-        font-size: clamp(2.25rem, 4.8vw, 4.5rem);
-        font-weight: 750;
-        letter-spacing: -0.045em;
-        line-height: 1.02;
-        text-wrap: balance;
+      @keyframes marquee {
+        to { transform: translateX(-50%); }
       }
 
-      .description {
-        max-width: 36rem;
-        margin: 28px 0 0;
-        color: var(--muted);
-        font-size: clamp(1rem, 1.4vw, 1.125rem);
-        line-height: 1.7;
+      /* ---- Sections ---- */
+      section.block {
+        position: relative;
+        padding: clamp(72px, 12vw, 148px) 0;
       }
 
-      .note {
-        margin: 0;
-        color: #7e7e7e;
-        font-size: 0.75rem;
-        letter-spacing: 0.08em;
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: clamp(30px, 5vw, 48px);
+      }
+
+      .section-label span {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
+        color: var(--ink-mute);
       }
 
-      .identity {
-        grid-area: identity;
+      .section-label::before {
+        content: "";
+        width: 30px;
+        height: 2px;
+        background: var(--red);
+        flex: 0 0 auto;
+      }
+
+      h2 {
+        font-size: clamp(1.9rem, 5vw, 3.1rem);
+      }
+
+      /* Manifesto */
+      .manifesto {
+        background: var(--paper);
+        border-block: 1px solid var(--line-soft);
+      }
+
+      .manifesto p {
+        font-family: var(--serif);
+        font-size: clamp(1.7rem, 5vw, 3.4rem);
+        line-height: 1.24;
+        letter-spacing: -0.01em;
+        max-width: 20ch;
+        margin: 0;
+      }
+
+      .manifesto em {
+        font-style: italic;
+        color: var(--red);
+      }
+
+      /* Instituto */
+      .instituto h2 {
+        max-width: 20ch;
+        margin-bottom: 26px;
+      }
+
+      .instituto-lead {
+        max-width: 58ch;
+        margin: 0 0 clamp(44px, 7vw, 68px);
+      }
+
+      .mv {
+        display: grid;
+        gap: 36px;
+      }
+
+      .mv > div {
+        padding-top: 26px;
+        border-top: 2px solid var(--ink);
+      }
+
+      .mv h3 {
+        font-size: 1.35rem;
+        margin-bottom: 10px;
+      }
+
+      .mv p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-size: 1.02rem;
+      }
+
+      .acoes {
+        margin-top: clamp(40px, 6vw, 64px);
+        padding-top: clamp(26px, 4vw, 36px);
+        border-top: 1px solid var(--line);
+      }
+
+      .acoes h4 {
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin: 0 0 18px;
+      }
+
+      .values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 8px;
+      }
+
+      .values b {
+        font-family: var(--sans);
+        font-weight: 500;
+        font-size: 0.86rem;
+        letter-spacing: 0.02em;
+        color: var(--ink-soft);
+        padding: 8px 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+
+      /* Atuação */
+      .atuacao {
+        background: var(--bg-2);
+      }
+
+      .atuacao h2 {
+        max-width: 16ch;
+      }
+
+      .atuacao .intro {
+        max-width: 50ch;
+        margin: 22px 0 clamp(30px, 5vw, 44px);
+        color: var(--ink-soft);
+      }
+
+      .area {
         position: relative;
         display: grid;
-        place-items: center;
-        overflow: hidden;
-        background: var(--paper);
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        padding: clamp(24px, 3.4vw, 34px) clamp(0px, 2vw, 24px);
+        border-top: 1px solid var(--line);
+        transition: padding-left 0.4s var(--ease);
       }
 
-      .identity::before,
-      .identity::after {
+      .area:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .area::before {
         content: "";
         position: absolute;
-        pointer-events: none;
-      }
-
-      .identity::before {
-        width: 120px;
-        height: 6px;
+        left: 0;
         top: 0;
-        right: clamp(28px, 5vw, 64px);
+        bottom: 0;
+        width: 2px;
         background: var(--red);
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.4s var(--ease);
       }
 
-      .identity::after {
-        width: 180px;
-        height: 180px;
-        right: -110px;
-        bottom: -110px;
-        border: 1px solid rgba(174, 32, 20, 0.18);
-        border-radius: 50%;
+      .area .idx {
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        color: var(--red);
+        padding-top: 8px;
+        min-width: 2ch;
       }
 
-      .logo-window {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 1 / 1;
+      .area h3 {
+        font-size: clamp(1.35rem, 3.4vw, 1.9rem);
+        transition: transform 0.4s var(--ease);
+      }
+
+      .area p {
+        margin: 8px 0 0;
+        max-width: 56ch;
+        color: var(--ink-soft);
+        font-size: 1rem;
+      }
+
+      @media (hover: hover) {
+        .area:hover {
+          padding-left: 22px;
+        }
+        .area:hover::before {
+          transform: scaleY(1);
+        }
+      }
+
+      /* Compromisso — dark */
+      .compromisso {
+        background: var(--dark);
+        color: #efe9df;
         overflow: hidden;
       }
 
-      .logo {
-        width: 138%;
-        max-width: none;
-        height: auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
+      .compromisso .section-label span {
+        color: rgba(239, 233, 223, 0.55);
+      }
+
+      .compromisso .quote {
+        font-family: var(--serif);
+        font-size: clamp(1.9rem, 5.4vw, 3.6rem);
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+        max-width: 22ch;
+        margin: 0 0 clamp(32px, 5vw, 48px);
+        color: #fff;
+      }
+
+      .compromisso .quote em {
+        font-style: italic;
+        color: #e6795f;
+      }
+
+      .compromisso .cols {
+        display: grid;
+        gap: 22px;
+        max-width: 62ch;
+      }
+
+      .compromisso .cols p {
+        margin: 0;
+        color: rgba(239, 233, 223, 0.72);
+      }
+
+      .compromisso .facts {
+        display: grid;
+        gap: 22px;
+        margin: clamp(38px, 6vw, 56px) 0 4px;
+        padding-top: clamp(28px, 4vw, 38px);
+        border-top: 1px solid rgba(239, 233, 223, 0.16);
+      }
+
+      .compromisso .facts b {
         display: block;
-        transform: translate(-50%, -50%);
+        font-family: var(--serif);
+        font-weight: 600;
+        font-size: clamp(1.35rem, 3.6vw, 2rem);
+        letter-spacing: -0.01em;
+        color: #fff;
+        margin-bottom: 4px;
       }
 
-      @media (max-width: 800px) {
-        body {
-          padding: 0;
-          background: var(--paper);
-        }
+      .compromisso .facts span {
+        font-family: var(--sans);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(239, 233, 223, 0.5);
+      }
 
-        main {
-          min-height: 100vh;
-          min-height: 100svh;
-          grid-template-columns: 1fr;
-          grid-template-areas:
-            "identity"
-            "message";
-          border: 0;
-          border-radius: 0;
-          box-shadow: none;
-        }
+      .compromisso .link-arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #fff;
+      }
 
-        .identity {
-          min-height: 280px;
-        }
+      .compromisso .link-arrow svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.35s var(--ease);
+      }
 
-        .logo-window {
-          max-width: 560px;
-          aspect-ratio: 1.35 / 1;
-        }
+      .compromisso .link-arrow:hover svg {
+        transform: translateX(5px);
+      }
 
-        .logo {
-          width: 130%;
-        }
+      /* Contato — dark cinematic */
+      .contato {
+        background: var(--dark-2);
+        color: #efe9df;
+      }
 
-        .message {
-          min-height: 52svh;
-          padding: clamp(32px, 9vw, 56px);
-        }
+      .contato .section-label span {
+        color: rgba(239, 233, 223, 0.55);
+      }
 
-        .message::before {
-          top: clamp(32px, 9vw, 56px);
-          left: clamp(32px, 9vw, 56px);
-        }
+      .contato h2 {
+        color: #fff;
+        font-size: clamp(2.4rem, 8vw, 5rem);
+        max-width: 14ch;
+        margin-bottom: clamp(28px, 5vw, 44px);
+      }
 
-        .content {
-          padding-block: 64px 48px;
-        }
+      .contato .intro {
+        max-width: 46ch;
+        color: rgba(239, 233, 223, 0.72);
+        margin: 0;
+      }
 
-        h1 {
-          max-width: 15ch;
-          font-size: clamp(2.15rem, 10vw, 3.75rem);
+      .mail-huge {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(14px, 3vw, 28px);
+        width: 100%;
+        margin-top: clamp(40px, 6vw, 64px);
+        font-family: var(--serif);
+        font-size: clamp(1.3rem, 5.6vw, 3.4rem);
+        color: #fff;
+        line-height: 1.1;
+        white-space: nowrap;
+        border-bottom: 2px solid rgba(239, 233, 223, 0.25);
+        padding-bottom: 14px;
+        transition: border-color 0.4s var(--ease), color 0.4s var(--ease);
+      }
+
+      .mail-huge > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .contato-social {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: clamp(28px, 4vw, 40px);
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: rgba(239, 233, 223, 0.82);
+        transition: color 0.3s var(--ease);
+      }
+
+      .contato-social:hover {
+        color: #fff;
+      }
+
+      .contato-social svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .mail-huge:hover {
+        color: #e6795f;
+        border-bottom-color: #e6795f;
+      }
+
+      .mail-huge svg {
+        width: clamp(24px, 5vw, 48px);
+        height: clamp(24px, 5vw, 48px);
+        flex: 0 0 auto;
+        transition: transform 0.4s var(--ease);
+      }
+
+      .mail-huge:hover svg {
+        transform: translate(6px, -6px);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: rgba(239, 233, 223, 0.55);
+        padding: clamp(48px, 7vw, 72px) 0 40px;
+        border-top: 1px solid rgba(239, 233, 223, 0.1);
+      }
+
+      .footer-top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .footer-brand {
+        display: inline-block;
+        margin-bottom: 22px;
+        background: #fbf9f5;
+        border-radius: 14px;
+        padding: 18px 22px;
+      }
+
+      .footer-brand img {
+        height: 70px;
+        width: auto;
+        display: block;
+      }
+
+      footer .tagline {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.15rem;
+        color: rgba(239, 233, 223, 0.82);
+        max-width: 30ch;
+        margin: 0;
+      }
+
+      .footer-nav {
+        display: flex;
+        gap: 48px;
+        flex-wrap: wrap;
+      }
+
+      .footer-col h4 {
+        color: #fff;
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin: 0 0 16px;
+      }
+
+      .footer-col a {
+        display: block;
+        margin-bottom: 11px;
+        font-size: 0.94rem;
+        color: rgba(239, 233, 223, 0.6);
+        transition: color 0.3s var(--ease);
+      }
+
+      .footer-col a:hover {
+        color: #fff;
+      }
+
+      .footer-col .finfo {
+        display: block;
+        margin-bottom: 11px;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: rgba(239, 233, 223, 0.6);
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+        justify-content: space-between;
+        margin-top: clamp(40px, 6vw, 60px);
+        padding-top: 26px;
+        border-top: 1px solid rgba(239, 233, 223, 0.12);
+        font-size: 0.8rem;
+      }
+
+      /* ---- Desktop ---- */
+      @media (min-width: 760px) {
+        .mv {
+          grid-template-columns: 1fr 1fr;
+          gap: 56px;
+        }
+        .hero-foot p {
+          font-size: 1.18rem;
+        }
+        .compromisso .cols {
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+        }
+        .compromisso .facts {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+        .contato-grid {
+          display: grid;
+          grid-template-columns: 0.85fr 1.15fr;
+          gap: 64px;
+          align-items: end;
         }
       }
 
-      @media (max-width: 420px) {
-        .identity {
-          min-height: 230px;
+      @media (min-width: 940px) {
+        .nav-links {
+          display: flex;
         }
+        .burger {
+          display: none;
+        }
+        .instituto-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 72px;
+          align-items: start;
+        }
+        .instituto-grid .section-label,
+        .instituto-grid .acoes {
+          grid-column: 1 / -1;
+        }
+      }
 
-        .logo-window {
-          aspect-ratio: 1.45 / 1;
-        }
-
-        .message {
-          min-height: auto;
-        }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        [data-reveal] { opacity: 1 !important; transform: none !important; }
+        .hero h1 .word > span { transform: none !important; }
+        .hero-skyline { clip-path: none !important; }
+        .marquee-track { animation: none !important; }
       }
     </style>
   </head>
 
-  <body>
-    <main aria-labelledby="page-title">
-      <section class="identity" aria-label="Identidade do IDEHAIS">
-        <div class="logo-window">
-          <img
-            class="logo"
-            src="assets/logo-idehais.png"
-            width="1254"
-            height="1254"
-            alt="IDEHAIS"
-            decoding="async"
-            fetchpriority="high"
-          />
+  <body id="topo">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header id="header">
+      <div class="shell">
+        <nav class="nav">
+          <a class="brand" href="#topo" aria-label="IDEHAIS — início">
+            <img
+              class="brand-logo"
+              src="assets/logo-lockup.png"
+              alt="IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social"
+            />
+          </a>
+          <div class="nav-links">
+            <a class="navitem" href="#instituto">O Instituto</a>
+            <a class="navitem" href="#atuacao">Atuação</a>
+            <a class="navitem" href="#compromisso">Compromisso</a>
+            <a class="btn btn-line" href="#contato"><span>Contato</span></a>
+          </div>
+          <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobilePanel">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="#instituto"><i>01</i> O Instituto</a>
+      <a href="#atuacao"><i>02</i> Atuação</a>
+      <a href="#compromisso"><i>03</i> Compromisso</a>
+      <a href="#contato"><i>04</i> Contato</a>
+    </div>
+
+    <main>
+      <!-- ===== Hero ===== -->
+      <section class="hero">
+        <div class="hero-grid" aria-hidden="true"></div>
+
+        <div class="shell hero-meta">
+          <p class="hero-name">
+            Instituto de Desenvolvimento Habitacional de Interesse Social
+          </p>
+          <p class="tick">Desde 2014</p>
+        </div>
+
+        <div class="shell hero-body">
+          <h1 aria-label="Moradia digna como base do desenvolvimento social.">
+            <span class="word" style="--i:0"><span>Moradia</span></span>
+            <span class="word" style="--i:1"><span><em>digna</em></span></span>
+            <span class="word" style="--i:2"><span>como</span></span>
+            <span class="word" style="--i:3"><span>base</span></span>
+            <span class="word" style="--i:4"><span>do</span></span>
+            <span class="word" style="--i:5"><span>desenvolvimento</span></span>
+            <span class="word" style="--i:6"><span>social.</span></span>
+          </h1>
+        </div>
+
+        <div class="shell hero-foot">
+          <p class="lead" data-reveal style="--d:0.7s">
+            Organização sem fins lucrativos que promove assistência social e a
+            inclusão de famílias em situação de vulnerabilidade — nas cidades e
+            no campo — por meio da moradia digna.
+          </p>
+          <div class="hero-actions" data-reveal style="--d:0.85s">
+            <a class="btn btn-primary" href="#contato"><span>Fale com o instituto</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-line" href="#atuacao"><span>Nossa atuação</span></a>
+          </div>
+        </div>
+
+        <div class="hero-skyline" aria-hidden="true">
+          <svg viewBox="0 0 1440 170" preserveAspectRatio="xMidYMax slice">
+            <rect class="b" x="0" y="95" width="110" height="75" />
+            <polygon class="b" points="120,170 120,110 205,62 290,110 290,170" />
+            <rect class="b" x="300" y="60" width="80" height="110" />
+            <rect class="b" x="392" y="100" width="64" height="70" />
+            <!-- casa de telhado vermelho (eco do logo) -->
+            <rect class="b" x="478" y="112" width="134" height="58" />
+            <polygon class="r" points="456,112 545,58 634,112" />
+            <rect class="b" x="648" y="78" width="86" height="92" />
+            <rect class="b" x="746" y="44" width="104" height="126" />
+            <polygon class="b" points="862,170 862,116 946,70 1030,116 1030,170" />
+            <rect class="b" x="1042" y="84" width="84" height="86" />
+            <rect class="b" x="1138" y="104" width="66" height="66" />
+            <rect class="b" x="1216" y="58" width="110" height="112" />
+            <rect class="b" x="1338" y="102" width="102" height="68" />
+          </svg>
         </div>
       </section>
 
-      <section class="message">
-        <div class="content">
-          <p class="status">Site em construção</p>
-          <h1 id="page-title">Estamos construindo um novo espaço para o IDEHAIS.</h1>
-          <p class="description">
-            Em breve, este será o canal digital do Instituto de Desenvolvimento
-            Habitacional de Interesse Social.
+      <!-- ===== Marquee ===== -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Moradia digna</span><span>Habitação rural</span><span>Trabalho técnico social</span><span>Defesa de direitos</span><span>Assistência social</span><span>Vida no campo</span>
+          <span>Moradia digna</span><span>Habitação rural</span><span>Trabalho técnico social</span><span>Defesa de direitos</span><span>Assistência social</span><span>Vida no campo</span>
+        </div>
+      </div>
+
+      <!-- ===== Manifesto ===== -->
+      <section class="block manifesto">
+        <div class="shell">
+          <p data-reveal>
+            Acreditamos que a moradia é o <em>ponto de partida</em> — não a linha
+            de chegada — para a dignidade e o desenvolvimento de milhares de
+            famílias.
           </p>
         </div>
+      </section>
 
-        <p class="note">Uma nova presença digital está a caminho.</p>
+      <!-- ===== Instituto ===== -->
+      <section class="block instituto" id="instituto">
+        <div class="shell instituto-grid">
+          <div class="section-label" data-reveal><span>O Instituto</span></div>
+          <div>
+            <h2 data-reveal>
+              Assistência social e inclusão pela moradia digna, desde 2014.
+            </h2>
+          </div>
+          <div>
+            <p class="instituto-lead lead" data-reveal>
+              O IDEHAIS é uma organização sem fins lucrativos que atua na
+              assistência social e na inclusão de famílias em situação de
+              vulnerabilidade, promovendo o direito à moradia adequada nas áreas
+              urbanas e rurais. Fundado em 2014, tornou-se Instituto IDEHAIS em
+              2021, ampliando seus objetivos.
+            </p>
+            <div class="mv">
+              <div data-reveal>
+                <h3>Finalidade</h3>
+                <p>
+                  Contribuir para a melhoria das condições de vida de pessoas em
+                  situação de vulnerabilidade social e econômica que enfrentam a
+                  violação do direito à moradia adequada.
+                </p>
+              </div>
+              <div data-reveal style="--d:0.1s">
+                <h3>Objetivo</h3>
+                <p>
+                  Produzir novas unidades habitacionais e melhorar moradias
+                  precárias, contribuindo para a permanência do agricultor e dos
+                  povos tradicionais no campo.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="acoes" data-reveal>
+            <h4>Como atuamos</h4>
+            <div class="values">
+              <b>Defesa de direitos</b><b>Orientação jurídica e social</b>
+              <b>Trabalho técnico social</b><b>Articulação em rede</b>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Atuação ===== -->
+      <section class="block atuacao" id="atuacao">
+        <div class="shell">
+          <div class="section-label" data-reveal><span>Áreas de Atuação</span></div>
+          <h2 data-reveal>Frentes que transformam comunidades.</h2>
+          <p class="intro" data-reveal style="--d:0.05s">
+            Atuamos de forma integrada — da construção da moradia ao
+            acompanhamento social das famílias.
+          </p>
+
+          <div class="areas">
+            <div class="area" data-reveal>
+              <div class="idx">01</div>
+              <div>
+                <h3>Habitação Rural</h3>
+                <p>Produção de novas unidades habitacionais em propriedades rurais, melhorando a vida no campo e a permanência do agricultor e dos povos tradicionais.</p>
+              </div>
+            </div>
+            <div class="area" data-reveal>
+              <div class="idx">02</div>
+              <div>
+                <h3>Melhoria Habitacional</h3>
+                <p>Construção e reforma de moradias precárias nas áreas urbanas e rurais, eliminando a insalubridade e criando lares mais seguros e saudáveis.</p>
+              </div>
+            </div>
+            <div class="area" data-reveal>
+              <div class="idx">03</div>
+              <div>
+                <h3>Trabalho Técnico Social</h3>
+                <p>Acompanhamento social das famílias beneficiadas, do início da obra à ocupação da moradia.</p>
+              </div>
+            </div>
+            <div class="area" data-reveal>
+              <div class="idx">04</div>
+              <div>
+                <h3>Defesa de Direitos</h3>
+                <p>Defesa do direito à moradia adequada, com orientações jurídicas e sociais às famílias.</p>
+              </div>
+            </div>
+            <div class="area" data-reveal>
+              <div class="idx">05</div>
+              <div>
+                <h3>Povos Tradicionais e Agricultura Familiar</h3>
+                <p>Apoio à permanência de agricultores e povos tradicionais no campo, com moradia e dignidade.</p>
+              </div>
+            </div>
+            <div class="area" data-reveal>
+              <div class="idx">06</div>
+              <div>
+                <h3>Articulação em Rede</h3>
+                <p>Fortalecimento da organização individual e coletiva e articulação com movimentos sociais, organizações e instituições parceiras.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Compromisso ===== -->
+      <section class="block compromisso" id="compromisso">
+        <div class="shell">
+          <div class="section-label" data-reveal><span>Compromisso Público</span></div>
+          <p class="quote" data-reveal>
+            Transparência e responsabilidade em <em>cada projeto</em> e parceria.
+          </p>
+          <div class="cols">
+            <p data-reveal>
+              Atuamos em articulação com movimentos sociais, o poder público e
+              instituições parceiras, com trabalho técnico e social em cada etapa
+              dos projetos.
+            </p>
+            <p data-reveal style="--d:0.1s">
+              Nossa equipe técnica reúne profissionais das áreas social,
+              pedagógica, jurídica, de arquitetura e urbanismo e engenharia, com
+              larga experiência em Habitação de Interesse Social.
+            </p>
+          </div>
+          <div class="facts" data-reveal style="--d:0.12s">
+            <div><b>2014</b><span>Ano de fundação</span></div>
+            <div><b>Urbano &amp; Rural</b><span>Frentes de atuação</span></div>
+            <div><b>Multidisciplinar</b><span>Equipe técnica</span></div>
+          </div>
+          <a class="link-arrow" href="#contato" data-reveal style="--d:0.15s">
+            Solicitar documentos institucionais
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===== Contato ===== -->
+      <section class="block contato" id="contato">
+        <div class="shell">
+          <div class="section-label" data-reveal><span>Contato</span></div>
+          <div class="contato-grid">
+            <h2 data-reveal>Vamos construir juntos.</h2>
+            <p class="intro" data-reveal>
+              Para parcerias institucionais, convênios e projetos habitacionais,
+              escreva para a nossa equipe.
+            </p>
+          </div>
+          <a class="mail-huge" href="mailto:idehais@outlook.com" data-reveal style="--d:0.1s">
+            <span>idehais@outlook.com</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+          <a class="contato-social" href="https://www.instagram.com/instituto.idehais/" target="_blank" rel="noopener" data-reveal style="--d:0.16s">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram</span>
+          </a>
+        </div>
       </section>
     </main>
+
+    <footer>
+      <div class="shell">
+        <div class="footer-top">
+          <div>
+            <a class="footer-brand" href="#topo" aria-label="IDEHAIS — início">
+              <img
+                src="assets/logo-full.png"
+                alt="IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social"
+              />
+            </a>
+            <p class="tagline">
+              Promovendo moradia digna, cidadania e desenvolvimento social.
+            </p>
+          </div>
+          <div class="footer-nav">
+            <div class="footer-col">
+              <h4>Institucional</h4>
+              <a href="#instituto">O Instituto</a>
+              <a href="#atuacao">Atuação</a>
+              <a href="#compromisso">Compromisso</a>
+            </div>
+            <div class="footer-col">
+              <h4>Contato</h4>
+              <a href="mailto:idehais@outlook.com">idehais@outlook.com</a>
+              <a href="https://www.instagram.com/instituto.idehais/" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="ano"></span> IDEHAIS — Instituto de Desenvolvimento Habitacional de Interesse Social.</span>
+          <span>Organização sem fins lucrativos</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Entrance
+      window.addEventListener("load", function () {
+        requestAnimationFrame(function () {
+          document.body.classList.add("ready");
+        });
+      });
+      // Fallback caso o load demore
+      setTimeout(function () {
+        document.body.classList.add("ready");
+      }, 600);
+
+      document.getElementById("ano").textContent = new Date().getFullYear();
+
+      // Header background on scroll
+      var header = document.getElementById("header");
+      function onScroll() {
+        header.classList.toggle("scrolled", window.scrollY > 40);
+      }
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Reveal on scroll
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll("[data-reveal]").forEach(function (el) {
+        io.observe(el);
+      });
+
+      // Mobile menu
+      var burger = document.getElementById("burger");
+      var panel = document.getElementById("mobilePanel");
+      burger.addEventListener("click", function () {
+        var open = panel.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      panel.addEventListener("click", function (e) {
+        if (e.target.closest("a")) {
+          panel.classList.remove("open");
+          burger.setAttribute("aria-expanded", "false");
+        }
+      });
+    </script>
   </body>
 </html>
